@@ -6,16 +6,18 @@ const AuthProvider = ({children}) => {
   const [token, setToken] = useState(null)
 
   const signOut = () => {
-    firebase.auth().signOut()
+    firebase.auth().signOut().catch(e => {
+      console.log(e.message)
+    })
   }
 
   const signIn = (email, password) => {
-    firebase.auth()
+    return firebase.auth()
             .signInWithEmailAndPassword(email, password)
   }
 
   const register = (email, password) => {
-    firebase.auth()
+    return firebase.auth()
             .createUserWithEmailAndPassword(email, password)
   }
 

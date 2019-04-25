@@ -13,14 +13,14 @@ const Header = ({location}) => {
 				<MobileMenu
 					location={location}
 					token={token}
-					signout={signOut}
+					signOut={signOut}
 				/>
 			</Responsive>
 			<Responsive minWidth={Responsive.onlyTablet.minWidth}>
 				<DesktopMenu
 					location={location}
 					token={token}
-					signout={signOut}
+					signOut={signOut}
 				/>
 			</Responsive>
 		</>

@@ -1,30 +1,26 @@
 /* eslint-disable camelcase */
 import React from 'react'
-import {Card, Image, Label} from 'semantic-ui-react'
+import {Card, Image, Label, Loader, Segment} from 'semantic-ui-react'
 import Img from 'gatsby-image'
 import {Link} from 'gatsby'
 
 const mapListingsToItems = listings =>
   listings.map(
-    ({node: {name, id, price, mainImage, background_colour, new: isNew}}) => {
-      const price = price
+    ({name, id, price, mainImage}) => {
       return {
         as: Link,
-        to: `/listing/${id}/`,
+        // to: `/listing/${id}/`,
         childKey: id,
         image: (
           <Image>
-            {isNew ? (
+            {/* {isNew ? (
               <Label color="red" ribbon style={{zIndex: '1'}}>
                 New!
               </Label>
-            ) : null}
+            ) : null} */}
             <Img
-              sizes={mainImage.childImageSharp.sizes}
+              fluid={mainImage}
               alt={name}
-              style={{
-                background: `${background_colour || '#fafafa'}`,
-              }}
             />
           </Image>
         ),
@@ -34,6 +30,10 @@ const mapListingsToItems = listings =>
     },
   )
 
-export default ({listings}) => (
-  <Card.Group items={mapListingsToItems(listings)} itemsPerRow={2} stackable />
+export default ({listings, loading}) => (
+    <Segment>
+        <Loader active={loading} />
+        { loading ? <></> : <Card.Group items={mapListingsToItems(listings)} itemsPerRow={2} stackable /> }
+    </Segment>
+  
 )

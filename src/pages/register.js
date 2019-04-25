@@ -12,24 +12,16 @@ import useForm from '../components/Hooks/useForm'
 const Register = ({location}) => {
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState([])
-  const {updateToken} = useContext(AuthContext)
+  const { register } = useContext(AuthContext)
 
   const formRegister = () => {
     setLoading(true)
-    register({
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    })
-      .then(data => {
-        const {id, token} = data
-        localStorage.setItem('customerToken', token)
-        localStorage.setItem('mcustomer', id)
-        updateToken()
+    register(values.email, values.password)
+      .then(() => {
+        setLoading(false)
         navigate('/myaccount/')
       })
       .catch(e => {
-        console.log(e)
         setLoading(false)
         setApiError(e.errors || e)
       })

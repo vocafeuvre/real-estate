@@ -67,7 +67,7 @@ const StyledDivider = styled(Divider)`
   }
 `
 
-const MobileMenu = ({location: {pathname}, token, signout}) => {
+const MobileMenu = ({location: {pathname}, token, signOut}) => {
 	const [activeItem, setActiveItem] = useState(pathname)
 	const [open, setOpen] = useState(false)
 
@@ -131,7 +131,7 @@ const MobileMenu = ({location: {pathname}, token, signout}) => {
 										My Account
 									</StyledLink>,
 									<StyledDivider key={2} />,
-									<StyledLink to="/" onClick={signout} key={3}>
+									<StyledLink to="/" onClick={signOut} key={3}>
 										Sign out
 									</StyledLink>,
 								]

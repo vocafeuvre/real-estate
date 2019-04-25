@@ -1,11 +1,14 @@
-import firebase from "firebase"
+import firebase from "@firebase/app"
+import "@firebase/auth"
+import "@firebase/firestore"
+
+console.log(process.env)
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_API_KEY,
-  databaseURL: process.env.FIREBASE_API_KEY,
-  projectId: process.env.FIREBASE_API_KEY,
-  storageBucket: process.env.FIREBASE_API_KEY
+  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
+  authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
+  projectId: process.env.GATSBY_FIREBASE_PROJ_ID
 }
 
 firebase.initializeApp(firebaseConfig);

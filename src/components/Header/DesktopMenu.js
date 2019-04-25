@@ -3,7 +3,7 @@ import {Link, withPrefix} from 'gatsby'
 import {Menu, Container, Icon} from 'semantic-ui-react'
 import Logo from './Logo'
 
-const DesktopMenu = ({location: {pathname}, token, signout}) => {
+const DesktopMenu = ({location: {pathname}, token, signOut}) => {
 	const [activeItem, setActiveItem] = useState(pathname)
 
 	useEffect(() => {
@@ -46,7 +46,7 @@ const DesktopMenu = ({location: {pathname}, token, signout}) => {
 							<Icon name="user" />
 							My Account
 						</Menu.Item>
-						<Menu.Item onClick={signout}>Sign out</Menu.Item>
+						<Menu.Item as={Link} to="/" onClick={signOut}>Sign out</Menu.Item>
 					</Menu.Menu>
 				) : (
 					<Menu.Menu position="right">

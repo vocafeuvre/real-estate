@@ -1,39 +1,39 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useEffect, useContext} from 'react'
 import {navigate} from 'gatsby'
 import SEO from '../components/SEO'
-import ListingList from '../components/ListingList'
+// import ListingList from '../components/ListingList'
 import Layout from '../components/Layout'
 import AuthContext from '../components/Context/AuthContext'
 
 const MyAccount = ({location}) => {
-  const [loading, setLoading] = useState(false)
-  const [listings, setListings] = useState([])
+  // const [loading, setLoading] = useState(false)
+  // const [listings, setListings] = useState([])
   const {token} = useContext(AuthContext)
 
   useEffect(() => {
     if (!token) {
       navigate('/login/')
     }
-    getListings(token)
-      .then(({ data }) => {
-        const listings = data.map(listing => ({
-          ...listing,
-        }))
-        setLoading(false)
-        setListings(listings)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    // getListings(token)
+    //   .then(({ data }) => {
+    //     const listings = data.map(listing => ({
+    //       ...listing,
+    //     }))
+    //     setLoading(false)
+    //     setListings(listings)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   }, [token])
 
   return (
     <Layout location={location}>
       <SEO title="My Account" />
-      <ListingList
+      {/* <ListingList
         listings={listings}
         loading={loading}
-      />
+      /> */}
     </Layout>
   )
 }

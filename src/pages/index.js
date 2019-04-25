@@ -1,44 +1,23 @@
 import React from "react"
-import {graphql, useStaticQuery} from 'gatsby'
 import get from 'lodash/get'
 import ListingList from '../components/ListingList'
+import { useStaticQuery, graphql } from 'gatsby'
+import { Message } from 'semantic-ui-react'
+import { gql } from 'apollo-boost'
+import { Query } from 'react-apollo' 
 import SEO from '../components/SEO'
 import Layout from '../components/Layout'
 
 export default ({ location }) => {
-    // const data = useStaticQuery(graphql`
-    //     query IndexQuery {
-    //         site {
-    //             siteMetadata {
-    //                 title
-    //             }
-    //         }
-    //         allListings {
-    //             edges {
-    //                 node {
-    //                     id
-    //                     name
-    //                     description
-    //                     location
-    //                     isNew
-    //                     price
-    //                     referrer {
-    //                         id
-    //                         name
-    //                     }
-    //                     mainImageLink
-    //                     mainImage {
-    //                         childImageSharp {
-    //                             sizes(maxWidth: 600) {
-    //                                 ...GatsbyImageSharpSizes
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // `)
+    const data = useStaticQuery(graphql`
+        query IndexQuery {
+            site {
+                siteMetadata {
+                    title
+                }
+            }
+        }
+    `)
 
     const siteTitle = get(data, 'site.siteMetadata.title')
     // const listings = get(data, 'allListings.edges')
@@ -47,7 +26,42 @@ export default ({ location }) => {
     return (
         <Layout location={location}>
             <SEO title={siteTitle} />
-            {/* <ListingList listings={getListingsWithImages} /> */}
+            <Query
+                query={gql`
+                query {
+                    listings {
+                        id
+                        name
+                        description
+                        price
+                        priceUom
+                        latitude
+                        longitude
+                        referrer {
+                            id
+                            email
+                            firstName
+                            lastName
+                        }
+                        mainImage {
+                            src
+                            width
+                            height
+                        }
+                        images {
+                            src
+                            width
+                            height
+                        }
+                    }
+                }
+                `}
+            >
+                {({ loading, error, data }) => {
+                    if (error) return <Message error content={error.message} />
+                    return <ListingList listings={data.listings} loading={loading} />
+                }}
+            </Query>
         </Layout>
     )
 }

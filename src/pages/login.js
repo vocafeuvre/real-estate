@@ -12,20 +12,18 @@ import useForm from '../components/Hooks/useForm'
 const LoginPage = ({location}) => {
   const [loading, setLoading] = useState(false)
   const [apiError, setApiError] = useState([])
-  const {updateToken} = useContext(AuthContext)
+  const { signIn } = useContext(AuthContext)
 
   const formLogin = () => {
     setLoading(true)
-    login({email: values.email, password: values.password})
-      .then(({id, token}) => {
-        localStorage.setItem('customerToken', token)
-        localStorage.setItem('mcustomer', id)
-        updateToken()
+    signIn(values.email, values.password)
+      .then(() => {
+        setLoading(false)
         navigate('/myaccount/')
       })
       .catch(e => {
         setLoading(false)
-        setApiError(e.errors || e)
+        setApiError(e.message)
       })
   }
   const {values, handleChange, handleSubmit, errors} = useForm(
