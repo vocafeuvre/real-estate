@@ -1,18 +1,38 @@
 import React, {useState, useEffect} from 'react'
 import AuthContext from './AuthContext'
+import firebase from '../../utils/firebase'
 
 const AuthProvider = ({children}) => {
   const [token, setToken] = useState(null)
 
-  const updateToken = () => setToken(localStorage.getItem('customerToken'))
-
   const signOut = () => {
-    localStorage.removeItem('customerToken')
-    setToken('')
+    firebase.auth().signOut()
   }
 
+  const signIn = (email, password) => {
+    firebase.auth()
+            .signInWithEmailAndPassword(email, password)
+  }
+
+  const register = (email, password) => {
+    firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+  }
+
+  firebase.auth().onIdTokenChanged(user => {
+    if (user) {
+      user.getIdToken().then(token => {
+        localStorage.setItem('userToken', token)
+        setToken(token)
+      })
+    } else {
+      localStorage.removeItem('userToken')
+      setToken('')
+    }
+  })
+
   useEffect(() => {
-    const token = localStorage.getItem('customerToken')
+    const token = localStorage.getItem('userToken')
     setToken(token)
   }, [])
 
@@ -20,7 +40,8 @@ const AuthProvider = ({children}) => {
     <AuthContext.Provider
       value={{
         token,
-        updateToken,
+        register,
+        signIn,
         signOut,
       }}
     >
