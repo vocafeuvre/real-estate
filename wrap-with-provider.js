@@ -1,11 +1,7 @@
 import React from 'react'
 import AuthProvider from './src/components/Context/AuthProvider'
 import { ApolloProvider } from 'react-apollo'
-import ApolloClient from 'apollo-boost'
-
-const client = new ApolloClient({
-  uri: "https://us-central1-real-estate-238201.cloudfunctions.net/api/graphql"
-})
+import { client } from './apollo-client'
 
 // eslint-disable-next-line import/prefer-default-export
 export default ({ element }) => (

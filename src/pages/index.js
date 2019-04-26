@@ -9,17 +9,17 @@ import SEO from '../components/SEO'
 import Layout from '../components/Layout'
 
 export default ({ location }) => {
-    const data = useStaticQuery(graphql`
-        query IndexQuery {
-            site {
-                siteMetadata {
-                    title
-                }
-            }
-        }
-    `)
+    // const data = useStaticQuery(graphql`
+    //     query IndexQuery {
+    //         site {
+    //             siteMetadata {
+    //                 title
+    //             }
+    //         }
+    //     }
+    // `)
 
-    const siteTitle = get(data, 'site.siteMetadata.title')
+    const siteTitle = 'Real Estate Listing App' // get(data, 'site.siteMetadata.title')
     // const listings = get(data, 'allListings.edges')
     // const getListingsWithImages = listings.filter(val => val.node.mainImageLink)
 

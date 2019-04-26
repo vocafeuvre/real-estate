@@ -8,18 +8,18 @@ import { Query } from 'react-apollo'
 import SEO from '../../components/SEO'
 import Layout from '../../components/Layout'
 
-export default ({ location }) => {
-    const data = useStaticQuery(graphql`
-        query {
-            site {
-                siteMetadata {
-                    title
-                }
-            }
-        }
-    `)
+const IndexPage = ({ location }) => {
+    // const data = useStaticQuery(graphql`
+    //     query {
+    //         site {
+    //             siteMetadata {
+    //                 title
+    //             }
+    //         }
+    //     }
+    // `)
 
-    const siteTitle = get(data, 'site.siteMetadata.title')
+    const siteTitle = 'Real Estate Listing App' // get(data, 'site.siteMetadata.title')
     // const listings = get(data, 'allListings.edges')
     // const getListingsWithImages = listings.filter(val => val.node.mainImageLink)
 
@@ -65,3 +65,5 @@ export default ({ location }) => {
         </Layout>
     )
 }
+
+export default IndexPage
