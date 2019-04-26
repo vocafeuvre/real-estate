@@ -11,7 +11,7 @@ const DesktopMenu = ({location: {pathname}, token, signOut}) => {
 	}, [pathname])
 
 	return (
-		<Menu size="huge" borderless>
+		<Menu size="huge" borderless pointing>
 			<Container text>
 				<Menu.Item
 					active={activeItem === withPrefix('/')}
@@ -26,15 +26,8 @@ const DesktopMenu = ({location: {pathname}, token, signOut}) => {
 					<Menu.Menu position="right">
 						<Menu.Item
 							as={Link}
-							to="/listings/"
-							active={activeItem === withPrefix('/listings/')}
-						>
-							Look at Listings
-						</Menu.Item>
-						<Menu.Item
-							as={Link}
-							to="/listings/share"
-							active={activeItem === withPrefix('/listings/share')}
+							to="/listings/add"
+							active={activeItem === withPrefix('/listings/add')}
 						>
 							Share a Listing
 						</Menu.Item>
@@ -53,7 +46,7 @@ const DesktopMenu = ({location: {pathname}, token, signOut}) => {
 						<Menu.Item
 							as={Link}
 							to="/listings/"
-							active={activeItem === withPrefix('/listings/')}
+							active={activeItem === withPrefix('/listings')}
 						>
 							Look at Listings
 						</Menu.Item>

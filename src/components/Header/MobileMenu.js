@@ -118,29 +118,31 @@ const MobileMenu = ({location: {pathname}, token, signOut}) => {
 							<StyledLink to="/" onClick={handleClose}>
 								Home
 							</StyledLink>
-							<StyledLink to="/listings" onClick={handleClose}>
-								Look at Listings
-							</StyledLink>
 							<StyledDivider />
 							{token
 								? [
-									<StyledLink to="/listings/share" onClick={handleClose}>
+									<StyledLink to="/listings/add" onClick={handleClose}>
 										Share a Listing
 									</StyledLink>,
-									<StyledLink to="/myaccount/" onClick={handleClose} key={1}>
+									<StyledDivider key={1} />,
+									<StyledLink to="/myaccount/" onClick={handleClose} key={2}>
 										My Account
 									</StyledLink>,
-									<StyledDivider key={2} />,
-									<StyledLink to="/" onClick={signOut} key={3}>
+									<StyledDivider key={3} />,
+									<StyledLink to="/" onClick={signOut} key={4}>
 										Sign out
 									</StyledLink>,
 								]
 								: [
-									<StyledLink to="/register/" onClick={handleClose} key={1}>
+									<StyledLink to="/listings/" onClick={handleClose}>
+										Look at Listings
+									</StyledLink>,
+									<StyledDivider key={1} />,
+									<StyledLink to="/register/" onClick={handleClose} key={2}>
 										Sign Up
 									</StyledLink>,
-									<StyledDivider key={2} />,
-									<StyledLink to="/login/" onClick={handleClose} key={3}>
+									<StyledDivider key={3} />,
+									<StyledLink to="/login/" onClick={handleClose} key={4}>
 										Sign In
 									</StyledLink>,
 								]}
