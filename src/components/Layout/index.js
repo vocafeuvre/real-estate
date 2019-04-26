@@ -14,7 +14,7 @@ const Layout = ({location, children}) => (
 		>
 			<Header location={location} />
 		</Headroom>
-			<Container text>{children}</Container>
+			<Container text style={{paddingBottom: '250px'}}>{children}</Container>
 		<Footer />
 	</>
 )
