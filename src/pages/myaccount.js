@@ -4,6 +4,7 @@ import SEO from '../components/SEO'
 // import ListingList from '../components/ListingList'
 import Layout from '../components/Layout'
 import AuthContext from '../components/Context/AuthContext'
+import { Message } from 'semantic-ui-react'
 
 const MyAccount = ({location}) => {
   // const [loading, setLoading] = useState(false)
@@ -30,6 +31,9 @@ const MyAccount = ({location}) => {
   return (
     <Layout location={location}>
       <SEO title="My Account" />
+      <Message>
+        Under construction.
+      </Message>
       {/* <ListingList
         listings={listings}
         loading={loading}
