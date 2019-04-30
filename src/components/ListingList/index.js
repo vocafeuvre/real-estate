@@ -8,7 +8,7 @@ const mapListingsToItems = listings =>
     ({name, id, price, priceUom, mainImage, isNew}) => {
       return {
         as: Link,
-        to: `/listing/${id}/`,
+        to: `/listings/${id}/`,
         childKey: id,
         image: (
           <Image
