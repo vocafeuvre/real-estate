@@ -1,43 +1,32 @@
 import React, {useEffect, useContext} from 'react'
 import {navigate} from 'gatsby'
 import SEO from '../components/SEO'
-// import ListingList from '../components/ListingList'
+import ListingList from '../components/ListingList'
+import { Query } from 'react-apollo'
 import Layout from '../components/Layout'
 import AuthContext from '../components/Context/AuthContext'
 import { Message } from 'semantic-ui-react'
+import { listingsByReferrer } from '../queries'
 
 const MyAccount = ({location}) => {
-  // const [loading, setLoading] = useState(false)
-  // const [listings, setListings] = useState([])
-  const {token} = useContext(AuthContext)
+  const {token, userId} = useContext(AuthContext)
 
   useEffect(() => {
+    console.log(token)
     if (!token) {
       navigate('/login/')
     }
-    // getListings(token)
-    //   .then(({ data }) => {
-    //     const listings = data.map(listing => ({
-    //       ...listing,
-    //     }))
-    //     setLoading(false)
-    //     setListings(listings)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
   }, [token])
 
   return (
     <Layout location={location}>
       <SEO title="My Account" />
-      <Message>
-        Under construction.
-      </Message>
-      {/* <ListingList
-        listings={listings}
-        loading={loading}
-      /> */}
+      <Query query={listingsByReferrer(userId)}>
+        {({ loading, error, data }) => {
+            if (error) return <Message error content={error.message} />
+            return <ListingList listings={data.listingsByReferrer} loading={loading} />
+        }}
+      </Query>
     </Layout>
   )
 }

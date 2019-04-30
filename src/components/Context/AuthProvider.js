@@ -1,9 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import AuthContext from './AuthContext'
 import firebase from '../../utils/firebase'
+import { client } from '../../utils/apollo-client'
+import { user as userQuery } from '../../queries'
 
 const AuthProvider = ({children}) => {
     const [token, setToken] = useState(null)
+    const [userId, setUserId] = useState(null)
 
     const signOut = () => {
         if(typeof window !== "undefined") {
@@ -34,9 +37,21 @@ const AuthProvider = ({children}) => {
                     localStorage.setItem('userToken', token)
                     setToken(token)
                 })
+
+                client.query({
+                    query: userQuery(user.uid)
+                }).then(result => {
+
+                    if(result.data.user){
+                        setUserId(result.data.user.id)
+                        localStorage.setItem('userId', result.data.user.id)
+                    }
+                })
             } else {
                 localStorage.removeItem('userToken')
                 setToken('')
+                localStorage.removeItem('userId')
+                setUserId('')
             }
         })
     }
@@ -44,12 +59,15 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const token = localStorage.getItem('userToken')
         setToken(token)
+        const userId = localStorage.getItem('userId')
+        setUserId(userId)
     }, [])
 
     return (
         <AuthContext.Provider
             value={{
                 token,
+                userId,
                 register,
                 signIn,
                 signOut,
