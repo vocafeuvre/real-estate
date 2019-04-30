@@ -121,7 +121,7 @@ const MobileMenu = ({location: {pathname}, token, signOut}) => {
 							<StyledDivider />
 							{token
 								? [
-									<StyledLink to="/listings/add" onClick={handleClose}>
+									<StyledLink to="/listings/add" onClick={handleClose} key={5}>
 										Share a Listing
 									</StyledLink>,
 									<StyledDivider key={1} />,
@@ -134,7 +134,7 @@ const MobileMenu = ({location: {pathname}, token, signOut}) => {
 									</StyledLink>,
 								]
 								: [
-									<StyledLink to="/listings/" onClick={handleClose}>
+									<StyledLink to="/listings/" onClick={handleClose} key={5}>
 										Look at Listings
 									</StyledLink>,
 									<StyledDivider key={1} />,
