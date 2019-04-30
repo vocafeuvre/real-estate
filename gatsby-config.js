@@ -11,6 +11,12 @@ module.exports = {
   pathPrefix: '/real-estate',
   plugins: [
     {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: {
+        prefixes: [`/listings/*`]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/src/pages`,
