@@ -14,7 +14,7 @@ const LoginPage = ({location}) => {
   const [apiError, setApiError] = useState([])
   const { signIn } = useContext(AuthContext)
 
-  const formLogin = () => {
+  const formLogin = values => {
     setLoading(true)
     signIn(values.email, values.password)
       .then(() => {

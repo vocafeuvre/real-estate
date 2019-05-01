@@ -1,13 +1,15 @@
 import React from "react"
-import get from 'lodash/get'
-import ListingAttributes from '../../components/ListingAttributes'
-import { useStaticQuery, graphql, Link } from 'gatsby'
-import { Message, Icon } from 'semantic-ui-react'
-import { Query } from 'react-apollo' 
-import SEO from '../../components/SEO'
-import Layout from '../../components/Layout'
+import get from "lodash/get"
+import ListingAttributes from "../../components/ListingAttributes"
+import { useStaticQuery, graphql, Link } from "gatsby"
+import { Message, Icon } from "semantic-ui-react"
+import { Query } from "react-apollo"
+import SEO from "../../components/SEO"
+import Layout from "../../components/Layout"
 
-import { listingById } from '../../queries'
+import ListingForm from "../../components/ListingForm"
+
+import { listingById } from "../../queries"
 
 const IndexPage = ({ location }) => {
     const data = useStaticQuery(graphql`
@@ -20,7 +22,7 @@ const IndexPage = ({ location }) => {
         }
     `)
 
-    const siteTitle = get(data, 'site.siteMetadata.title')
+    const siteTitle = get(data, "site.siteMetadata.title")
     const listingId = location.pathname.split("/")[2]
     return (
         <Layout location={location}>
@@ -29,12 +31,22 @@ const IndexPage = ({ location }) => {
                 <Icon name="caret left" />
                 Go back to home
             </Link>
-            <Query query={listingById(listingId)}>
-                {({ loading, error, data }) => {
-                    if (error) return <Message error content={error.message} />
-                    return <ListingAttributes {...data.listing} loading={loading}/>
-                }}
-            </Query>
+            {listingId === "add" ? (
+                <ListingForm />
+            ) : (
+                <Query query={listingById(listingId)}>
+                    {({ loading, error, data }) => {
+                        if (error)
+                            return <Message error content={error.message} />
+                        return (
+                            <ListingAttributes
+                                {...data.listing}
+                                loading={loading}
+                            />
+                        )
+                    }}
+                </Query>
+            )}
         </Layout>
     )
 }

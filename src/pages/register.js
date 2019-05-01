@@ -14,7 +14,7 @@ const Register = ({location}) => {
   const [apiError, setApiError] = useState([])
   const { register } = useContext(AuthContext)
 
-  const formRegister = () => {
+  const formRegister = values => {
     setLoading(true)
     register(values.email, values.password)
       .then(() => {

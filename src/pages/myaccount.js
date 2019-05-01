@@ -13,6 +13,7 @@ const MyAccount = ({location}) => {
 
   useEffect(() => {
     console.log(token)
+    // if still not works, use the local storage to make sure we dont do the redirect
     if (!token) {
       navigate('/login/')
     }

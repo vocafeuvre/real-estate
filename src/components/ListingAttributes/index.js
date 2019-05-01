@@ -44,18 +44,24 @@ export default ({name, description, latitude, longitude, address, priceUom, pric
             </Table.Body>
           </Table>
 
-          <Divider hidden/>
-          <Header as="h3">Location</Header>
-          <Divider />
-          <Segment style={{height: "400px", width: "100%"}}>
-            <GoogleMapReact
-              bootstrapURLKeys={{ key: process.env.GATSBY_GOOGLE_MAP_KEY }}
-              defaultCenter={[latitude, longitude]}
-              defaultZoom={15}
-            >
-              <MapMarker lat={latitude} lng={longitude} text="I'm here!"/>
-            </GoogleMapReact>
-          </Segment>
+          {
+            latitude && longitude
+            ? <>
+                <Divider hidden/>
+                <Header as="h3">Location</Header>
+                <Divider />
+                <Segment style={{height: "400px", width: "100%"}}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: process.env.GATSBY_GOOGLE_MAP_KEY }}
+                    defaultCenter={[latitude, longitude]}
+                    defaultZoom={15}
+                  >
+                    <MapMarker lat={latitude} lng={longitude} text="I'm here!"/>
+                  </GoogleMapReact>
+                </Segment>
+              </>
+            : null
+          }
 
           { 
             images.length === 0 
