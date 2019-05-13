@@ -45,6 +45,7 @@ const LoginPage = ({location}) => {
       <Message error header={e.title} content={e.detail} key={e.status} />
     ))
   }
+
   return (
     <Layout location={location}>
       <SEO title="Login" />

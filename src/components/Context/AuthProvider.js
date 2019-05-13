@@ -23,10 +23,22 @@ const AuthProvider = ({children}) => {
         }
     }
 
-    const register = (email, password) => {
+    const register = (values) => {
         if(typeof window !== "undefined") {
             return firebase.auth()
-                    .createUserWithEmailAndPassword(email, password)
+                    .createUserWithEmailAndPassword(values.email, values.password)
+                    .then(userCredential => {
+                        if (userCredential.user) {
+                            const userCollection = firebase.firestore().collection('users')
+                            return userCollection.add({
+                                email: values.email,
+                                firstName: values.firstName,
+                                lastName: values.lastName,
+                                role: "user",
+                                uid: userCredential.user.uid
+                            })
+                        }
+                    })
         }
     }
 
@@ -41,7 +53,6 @@ const AuthProvider = ({children}) => {
                 client.query({
                     query: userQuery(user.uid)
                 }).then(result => {
-
                     if(result.data.user){
                         setUserId(result.data.user.id)
                         localStorage.setItem('userId', result.data.user.id)
