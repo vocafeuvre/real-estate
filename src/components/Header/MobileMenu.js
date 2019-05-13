@@ -134,9 +134,6 @@ const MobileMenu = ({location: {pathname}, token, signOut}) => {
 									</StyledLink>,
 								]
 								: [
-									<StyledLink to="/listings/" onClick={handleClose} key={5}>
-										Look at Listings
-									</StyledLink>,
 									<StyledDivider key={1} />,
 									<StyledLink to="/register/" onClick={handleClose} key={2}>
 										Sign Up

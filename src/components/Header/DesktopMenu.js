@@ -45,13 +45,6 @@ const DesktopMenu = ({location: {pathname}, token, signOut}) => {
 					<Menu.Menu position="right">
 						<Menu.Item
 							as={Link}
-							to="/listings/"
-							active={activeItem === withPrefix('/listings')}
-						>
-							Look at Listings
-						</Menu.Item>
-						<Menu.Item
-							as={Link}
 							to="/register/"
 							active={activeItem === withPrefix('/register/')}
 						>
