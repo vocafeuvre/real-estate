@@ -1,93 +1,52 @@
-import React, { useState, useContext } from 'react'
-import { Form, Segment, Button, Message, Input, TextArea } from 'semantic-ui-react'
-import useForm from '../../components/Hooks/useForm'
-import { isNumber } from 'util';
-
-const validate = values => {
-    const errors = {}
-
-    if (!values.listingName) {
-        errors.listingName = 'Listing Name is required'
-    }
-
-    const descCharLimit = 300
-    if (!values.description) {
-        errors.description = 'Description is required'
-    } else if (values.description.length > descCharLimit) {
-        errors.description = `Character limit is at ${descCharLimit}`
-    }
-    
-    const addressCharLimit = 100
-    if (!values.address) {
-        errors.address = 'Address is required'
-    } else if (values.address.length > addressCharLimit) {
-        errors.address = `Character limit is at ${addressCharLimit}`
-    }
-    
-    const priceUomCharLimit = 3
-    if (!values.priceUom) {
-        errors.priceUom = 'Currency is required'
-    } else if (values.priceUom.length > descCharLimit) {
-        errors.priceUom = `Character limit is at ${priceUomCharLimit}. Ex: USD`
-    }
-
-    if (!values.price) {
-        errors.price = 'Price is required'
-    } else if (isNumber(values.price)) {
-        errors.price = 'Price should be a number'
-    }
-
-    return errors
-}
-
+import React from "react"
+import {
+    Form,
+    Segment,
+    Input,
+    TextArea,
+    Button,
+    Divider,
+} from "semantic-ui-react"
 
 export default props => {
-    const [loading, setLoading] = useState(false)
-    const [apiErrors, setApiErrors] = useState([])
+    const { setListingInfo, validateListingInfo, listingInfoErrors, listingInfo, next } = props
 
-    const formSubmit = values => {
-        props.saveInfo(values)
-    }
+    const handleChange = event => {
+        event.persist()
+        
+        let value = event.target.value
 
-    const {values, handleChange, handleSubmit, errors} = useForm(
-        formSubmit,
-        validate,
-    )
+        if (event.target.name === 'price') {
+            value = Number.parseFloat(value).toFixed(2)
+        }
 
-    const handleErrors = errors => {
-      if (!Array.isArray(errors) && !errors.length > 0) {
-        return (
-          <Message error header="Sorry" content="Cannot submit a listing at this time." />
-        )
-      }
-      return errors.map(e => (
-        <Message error header={e.title} content={e.detail} key={e.status} />
-      ))
+        if (event.target.name === 'priceUom') {
+            value = event.target.value.toString().toUpperCase()
+        }
+
+        setListingInfo({
+            [event.target.name]: value
+        })
     }
 
     return (
-        <Form
-            onSubmit={handleSubmit}
-            loading={loading}
-            error={Object.entries(errors).length !== 0}
-        >
-            {apiErrors.length !== 0 ? handleErrors(apiErrors) : null}
+        <Form error={Object.entries(listingInfoErrors).length !== 0}>
             <Segment basic>
                 <Form.Field required>
                     <label htmlFor="listingName">Name of Listing</label>
                     <Input
-                    id="listingName"
-                    fluid
-                    name="listingName"
-                    type="text"
-                    autoFocus
-                    onChange={handleChange}
-                    value={values.listingName || ''}
+                        id="listingName"
+                        fluid
+                        name="listingName"
+                        type="text"
+                        autoFocus
+                        onChange={handleChange}
+                        value={listingInfo.listingName || ""}
                     />
                 </Form.Field>
-                {errors.listingName && (
-                    <p data-testid="error" style={{color: 'red'}}>
-                    {errors.listingName}
+                {listingInfoErrors.listingName && (
+                    <p data-testid="error" style={{ color: "red" }}>
+                        {listingInfoErrors.listingName}
                     </p>
                 )}
                 <Form.Field required>
@@ -96,11 +55,13 @@ export default props => {
                         id="description"
                         rows={2}
                         name="description"
-                        value={values.description || ''}
+                        value={listingInfo.description || ""}
                         onChange={handleChange}
                     />
                 </Form.Field>
-                {errors.description && <p style={{color: 'red'}}>{errors.description}</p>}
+                {listingInfoErrors.description && (
+                    <p style={{ color: "red" }}>{listingInfoErrors.description}</p>
+                )}
                 <Form.Group>
                     <Form.Field required width={6}>
                         <label htmlFor="priceUom">Currency</label>
@@ -108,7 +69,8 @@ export default props => {
                             id="priceUom"
                             fluid
                             name="priceUom"
-                            value={values.priceUom || ''}
+                            maxLength={3}
+                            value={listingInfo.priceUom || ""}
                             onChange={handleChange}
                         />
                     </Form.Field>
@@ -118,26 +80,37 @@ export default props => {
                             id="price"
                             fluid
                             name="price"
-                            value={values.price || ''}
+                            maxLength={15}
+                            value={listingInfo.price || ""}
                             onChange={handleChange}
                         />
                     </Form.Field>
                 </Form.Group>
-                {errors.price && <p style={{color: 'red'}}>{errors.price}</p>}
+                {listingInfoErrors.price && <p style={{ color: "red" }}>{listingInfoErrors.price}</p>}
+                {listingInfoErrors.priceUom && <p style={{ color: "red" }}>{listingInfoErrors.priceUom}</p>}
                 <Form.Field required>
                     <label htmlFor="address">Address</label>
                     <Input
                         id="address"
                         fluid
                         name="address"
-                        value={values.address || ''}
+                        value={listingInfo.address || ""}
                         onChange={handleChange}
                     />
                 </Form.Field>
-                {errors.address && <p style={{color: 'red'}}>{errors.address}</p>}
-                <Button type="submit" color="black">
-                    Save Listing Info
-                </Button>
+                {listingInfoErrors.address && (
+                    <p style={{ color: "red" }}>{listingInfoErrors.address}</p>
+                )}
+                <Divider hidden />
+                <Button.Group>
+                    <Button primary type="button" onClick={e => {
+                        const canProceed = validateListingInfo()
+
+                        if (canProceed) {
+                            next()
+                        }
+                    }}>Next</Button>
+                </Button.Group>
             </Segment>
         </Form>
     )
