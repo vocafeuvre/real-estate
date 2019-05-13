@@ -35,7 +35,7 @@ export default ({name, description, latitude, longitude, address, priceUom, pric
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Price</Table.Cell>
-                <Table.Cell>{`${priceUom} ${price}`}</Table.Cell>
+                <Table.Cell>{`${priceUom} ${Number(price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Referred by</Table.Cell>
