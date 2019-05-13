@@ -43,7 +43,6 @@ const ImageCarousel = ({ images }) => (
                 <Slider trayTag="div" style={{position: "relative"}}>
                     {
                         images.map((image, index) => {
-                            console.log(images.length)
                             return (
                                 <Slide tag="div" index={index} key={index}>
                                     <Image src={image.src} fluid />
